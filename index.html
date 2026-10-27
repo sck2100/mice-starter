@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>爆鼠闖天下</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=LXGW+WenKai+TC:wght@400;700&display=swap">
+<style>
+  /* 首頁：只列出各章節，點進去玩 */
+  :root{
+    --paper:#F4F8FC; --grid:#DCE6F2; --card:#FFFFFF; --ink:#2B2233; --ink-soft:#5E586B;
+    --sheet:#beb8ae; --cheese:#F6C445; --seed:#F4A9BA;
+    --f-hand:"LXGW WenKai TC","PingFang TC","Microsoft JhengHei","Noto Sans TC",system-ui,sans-serif;
+    --f-num:"Baloo 2","LXGW WenKai TC",ui-rounded,system-ui,sans-serif;
+    color-scheme:light;
+  }
+  :root:lang(en){ --f-hand:"Baloo 2","LXGW WenKai TC",system-ui,sans-serif; }
+  *,*::before,*::after{box-sizing:border-box}
+  html,body{margin:0;background:var(--paper)}
+  body{
+    color:var(--ink); font-family:var(--f-hand); font-size:17px; line-height:1.55; min-height:100vh;
+    background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+    background-size:28px 28px;
+  }
+  main{
+    max-width:720px; margin:0 auto; display:flex; flex-direction:column; gap:16px; position:relative;
+    padding-block:24px 48px;
+    padding-left:max(16px, env(safe-area-inset-left,0px)); padding-right:max(16px, env(safe-area-inset-right,0px));
+  }
+  header{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px}
+  .hero{width:clamp(100px,24vw,140px);height:auto}
+  h1{margin:0;font-size:clamp(34px,9vw,52px);line-height:1.2}
+  h1 span{
+    background:linear-gradient(transparent 62%, color-mix(in srgb,var(--seed) 75%,transparent) 62%, color-mix(in srgb,var(--seed) 75%,transparent) 92%, transparent 92%);
+    padding:0 4px;
+  }
+  .alt{margin:0;font-family:var(--f-num);font-weight:600;font-size:15px;color:var(--ink-soft)}
+  .credit{margin:0;font-size:14px;color:var(--ink-soft);text-align:center}
+  .credit a{color:inherit;text-decoration:underline;text-underline-offset:3px;display:inline-block;padding:6px 4px}
+  .credit a:focus-visible{outline:3px dashed var(--ink);outline-offset:2px}
+  .langBtn{
+    position:absolute;top:16px;right:max(16px, env(safe-area-inset-right,0px));
+    font:inherit;font-weight:700;font-size:16px;padding:4px 16px;border:3px solid var(--ink);border-radius:999px;
+    background:var(--card);color:var(--ink);cursor:pointer;
+  }
+  .langBtn:focus-visible{outline:3px dashed var(--ink);outline-offset:2px}
+
+  .chapters{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+  .ch{
+    display:flex;flex-direction:column;background:var(--card);color:var(--ink);text-decoration:none;
+    border:4px solid var(--ink);border-radius:22px;box-shadow:0 6px 0 var(--ink);overflow:hidden;
+  }
+  a.ch:active{transform:translateY(3px);box-shadow:0 3px 0 var(--ink)}
+  a.ch:focus-visible{outline:4px dashed var(--ink);outline-offset:4px}
+  .thumb{position:relative;aspect-ratio:5/3;background:var(--sheet);border-bottom:4px solid var(--ink);overflow:hidden}
+  .thumb img{display:block;width:100%;height:100%;object-fit:cover;filter:blur(10px);transform:scale(1.15);opacity:.8}
+  .badge{
+    position:absolute;inset:0;margin:auto;width:64px;height:64px;display:grid;place-items:center;
+    border-radius:50%;background:var(--cheese);border:4px solid var(--ink);box-shadow:0 4px 0 var(--ink);
+    font-family:var(--f-num);font-weight:800;font-size:34px;line-height:1;padding-top:.08em;
+  }
+  .info{padding:12px 16px 16px;display:flex;flex-direction:column;gap:2px}
+  .info b{font-size:22px;line-height:1.3}
+  .info small{font-size:15px;color:var(--ink-soft)}
+  .ch.soon{opacity:.6;border-style:dashed;box-shadow:none}
+  .ch.soon .thumb{background:var(--grid)}
+</style>
+</head>
+<body>
+<main>
+  <button class="langBtn" id="langBtn" type="button">English</button>
+  <header>
+    <img class="hero" src="chapter1-amazon/assets/mouse.png?v=00ee7076" alt="">
+    <h1><span data-i18n="title">爆鼠闖天下</span></h1>
+    <p class="alt" data-i18n="alt">BooMMouse Goes Wild</p>
+  </header>
+
+  <!-- 新章節：複製一張卡片，改 href 和文字；還沒做好的用 div.ch.soon -->
+  <section class="chapters">
+    <a class="ch" href="chapter1-amazon/index.html">
+      <div class="thumb"><img src="chapter1-amazon/assets/reveal.png?v=168866e9" alt=""><span class="badge">1</span></div>
+      <div class="info"><b data-i18n="ch1">第一章　亞馬遜吃瓜子</b><small data-i18n="chSub">帶小老鼠吃瓜子，四關過完拿勳章</small></div>
+    </a>
+    <a class="ch" href="chapter2-amazon/index.html">
+      <div class="thumb"><img src="chapter2-amazon/assets/reveal.png?v=fc1c5375" alt=""><span class="badge">2</span></div>
+      <div class="info"><b data-i18n="ch2">第二章　亞馬遜吃瓜子</b><small data-i18n="chSub">帶小老鼠吃瓜子，四關過完拿勳章</small></div>
+    </a>
+    <a class="ch" href="chapter3-amazon/index.html">
+      <div class="thumb"><img src="chapter3-amazon/assets/reveal.png?v=168d3d4b" alt=""><span class="badge">3</span></div>
+      <div class="info"><b data-i18n="ch3">第三章　亞馬遜吃瓜子</b><small data-i18n="chSub">帶小老鼠吃瓜子，四關過完拿勳章</small></div>
+    </a>
+    <a class="ch" href="chapter4-amazon/index.html">
+      <div class="thumb"><img src="chapter4-amazon/assets/reveal.png?v=08d8a5ff" alt=""><span class="badge">4</span></div>
+      <div class="info"><b data-i18n="ch4">第四章　亞馬遜吃瓜子</b><small data-i18n="chSub">帶小老鼠吃瓜子，四關過完拿勳章</small></div>
+    </a>
+    <a class="ch" href="chapter5-amazon/index.html">
+      <div class="thumb"><img src="chapter5-amazon/assets/reveal.png?v=6afbbf56" alt=""><span class="badge">5</span></div>
+      <div class="info"><b data-i18n="ch5">第五章　亞馬遜吃瓜子</b><small data-i18n="chSub">帶小老鼠吃瓜子，四關過完拿勳章</small></div>
+    </a>
+  </section>
+
+  <p class="credit"><a href="https://boommouse.com/" target="_blank" rel="noopener" data-i18n="credit">角色和圖都是 BooMMouse 畫的</a></p>
+</main>
+<script>
+(function(){
+  // 和各章節共用同一個語言設定（localStorage boommouse-lang）
+  const TEXT = {
+    zh: { htmlLang:'zh-Hant', docTitle:'爆鼠闖天下', langBtn:'English',
+      title:'爆鼠闖天下', alt:'BooMMouse Goes Wild',
+      ch1:'第一章　亞馬遜吃瓜子', ch2:'第二章　亞馬遜吃瓜子', ch3:'第三章　亞馬遜吃瓜子',
+      ch4:'第四章　亞馬遜吃瓜子', ch5:'第五章　亞馬遜吃瓜子',
+      chSub:'帶小老鼠吃瓜子，四關過完拿勳章', soon:'即將推出',
+      credit:'角色和圖都是 BooMMouse 畫的' },
+    en: { htmlLang:'en', docTitle:'BooMMouse Goes Wild', langBtn:'中文',
+      title:'BooMMouse Goes Wild', alt:'爆鼠闖天下',
+      ch1:'Chapter 1 · Amazon Seed Hunt', ch2:'Chapter 2 · Amazon Seed Hunt', ch3:'Chapter 3 · Amazon Seed Hunt',
+      ch4:'Chapter 4 · Amazon Seed Hunt', ch5:'Chapter 5 · Amazon Seed Hunt',
+      chSub:'Help the little mouse find seeds and win a medal', soon:'Coming soon',
+      credit:'Characters and pictures drawn by BooMMouse' }
+  };
+  const store = {
+    get(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } },
+    set(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+  };
+  let lang = store.get('boommouse-lang') || 'en'; // 還沒選過語言時預設英文
+  function apply(){
+    const t = TEXT[lang];
+    document.documentElement.lang = t.htmlLang; document.title = t.docTitle;
+    document.getElementById('langBtn').textContent = t.langBtn;
+    document.querySelectorAll('[data-i18n]').forEach(el => el.textContent = t[el.dataset.i18n]);
+  }
+  document.getElementById('langBtn').addEventListener('click', () => {
+    lang = lang === 'zh' ? 'en' : 'zh'; store.set('boommouse-lang', lang); apply();
+  });
+  apply();
+})();
+</script>
+</body>
+</html>

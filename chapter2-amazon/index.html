@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>爆鼠闖天下－亞馬遜吃瓜子 第二章</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=LXGW+WenKai+TC:wght@400;700&display=swap">
+<link rel="stylesheet" href="style.css?v=1952f9fe">
+</head>
+<body>
+<div class="app">
+
+  <!-- 開始畫面 -->
+  <section class="screen start" id="startScreen">
+    <a class="tbtn homeLink" href="../index.html" data-i18n="allChapters">← 所有章節</a>
+    <button class="tbtn langBtn" type="button" data-i18n="langBtn">English</button>
+    <img class="hero" src="assets/mouse.png?v=a6fb7080" alt="">
+    <h1><span class="hl" data-i18n="title1">爆鼠闖天下</span><small data-i18n="title2">亞馬遜吃瓜子　第二章</small></h1>
+    <p class="alt" data-i18n="titleAlt">BooMMouse Goes Wild – Amazon, Chapter 2</p>
+    <div class="teaser" aria-hidden="true">
+      <img src="assets/reveal.png?v=fc1c5375" alt="">
+      <b class="q">?</b>
+    </div>
+    <p class="sub" data-i18n="sub">帶小老鼠去亞馬遜森林吃瓜子。每過一關，這張圖就會變清楚一點，四關都過就能拿到勳章！</p>
+    <label class="name">
+      <span data-i18n="nameLabel">你的名字</span>
+      <input id="nameInput" type="text" maxlength="12" placeholder="寫上名字" data-i18n-ph="namePh" autocomplete="off" enterkeyhint="go">
+    </label>
+    <button class="go" id="startBtn" type="button" data-i18n="start">出發！</button>
+    <p class="credit"><a href="https://boommouse.com/" target="_blank" rel="noopener" data-i18n="credit">角色和圖都是 BooMMouse 畫的</a></p>
+  </section>
+
+  <!-- 遊戲區 -->
+  <section class="screen play" id="playScreen" hidden>
+    <div class="status" aria-live="polite">
+      <!-- 遊戲中也看得到：放在最上面，不用捲到下面找 -->
+      <a class="tbtn menuLink pill" href="../index.html" data-i18n="allChapters">← 所有章節</a>
+      <div class="pill" id="pLevel"><small data-i18n="lvPre">第</small><b id="nLevel">1</b><small data-i18n="lvPost">關</small></div>
+      <div class="pill" id="pSeeds"><canvas id="seedIcon" width="68" height="68" aria-hidden="true"></canvas><b id="nSeeds">0</b><small id="nNeed">/ 5</small></div>
+      <div class="pill" id="pParade"><img src="assets/mouse.png?v=a6fb7080" alt=""><b id="nParade">0</b><small data-i18n="babies">隻小老鼠</small></div>
+    </div>
+
+    <div class="board" id="board">
+      <img id="bg" src="assets/reveal.gif?v=ae57c718" alt="">
+      <canvas id="game" width="640" height="384" aria-label="遊戲區" data-i18n-aria="boardAria"></canvas>
+
+      <div class="overlay" id="pauseOv" hidden>
+        <div class="ocard">
+          <h2 data-i18n="pauseTitle">休息一下</h2>
+          <button class="go" id="resumeBtn" type="button" data-i18n="resume">繼續玩</button>
+        </div>
+      </div>
+      <div class="overlay" id="failOv" hidden>
+        <div class="ocard">
+          <h2 id="failTitle" data-i18n="failTitle">哎呀！撞到自己的隊伍了</h2>
+          <p id="failDetail">沒關係，這一關重新來。</p>
+          <button class="go" id="retryBtn" type="button" data-i18n="retry">再試一次</button>
+        </div>
+      </div>
+      <div class="overlay" id="clearOv" hidden>
+        <div class="ocard">
+          <h2 id="clearTitle">第 1 關過關！</h2>
+          <p id="clearDetail"></p>
+          <button class="go" id="nextBtn" type="button" data-i18n="next">下一關</button>
+        </div>
+      </div>
+
+      <!-- 破關揭曉：暗色遮罩＋勳章落下 -->
+      <div class="medalLayer" id="medalLayer" hidden>
+        <div class="dim"></div>
+        <div class="medal">
+          <svg viewBox="0 0 100 140" aria-hidden="true">
+            <path d="M28 2 L46 2 L60 64 L42 64 Z" fill="#3E9A5A" stroke="#2B2233" stroke-width="3.5" stroke-linejoin="round"/>
+            <path d="M72 2 L54 2 L40 64 L58 64 Z" fill="#E2453C" stroke="#2B2233" stroke-width="3.5" stroke-linejoin="round"/>
+            <circle cx="50" cy="94" r="40" fill="#F6C445" stroke="#2B2233" stroke-width="4"/>
+            <circle cx="50" cy="94" r="31" fill="none" stroke="#C98A00" stroke-width="3" stroke-dasharray="5 4"/>
+            <path transform="translate(30 74) scale(.8)" d="M25 3 L31.5 17 L47 18.6 L35.4 29 L38.8 44.5 L25 36.6 L11.2 44.5 L14.6 29 L3 18.6 L18.5 17 Z" fill="#FFFFFF" stroke="#2B2233" stroke-width="4" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <!-- 破關後走進來的小老鼠，戴著名牌 -->
+        <div class="buddy"><span class="tag" id="buddyTag">小老鼠</span><img src="assets/mouse.png?v=a6fb7080" alt=""></div>
+      </div>
+    </div>
+
+    <div class="dpad" id="dpad">
+      <button class="dbtn d-up" type="button" data-d="up" aria-label="往上" data-i18n-aria="up"><svg viewBox="0 0 30 30"><path d="M5 20 L15 8 L25 20 Z" fill="currentColor" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/></svg></button>
+      <button class="dbtn d-left" type="button" data-d="left" aria-label="往左" data-i18n-aria="left"><svg viewBox="0 0 30 30"><path d="M20 5 L8 15 L20 25 Z" fill="currentColor" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/></svg></button>
+      <div class="dmid" data-i18n="dmid">滑圖片
+也可以</div>
+      <button class="dbtn d-right" type="button" data-d="right" aria-label="往右" data-i18n-aria="right"><svg viewBox="0 0 30 30"><path d="M10 5 L22 15 L10 25 Z" fill="currentColor" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/></svg></button>
+      <button class="dbtn d-down" type="button" data-d="down" aria-label="往下" data-i18n-aria="down"><svg viewBox="0 0 30 30"><path d="M5 10 L15 22 L25 10 Z" fill="currentColor" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/></svg></button>
+    </div>
+
+    <!-- 勳章畫面 -->
+    <div class="medalCard" id="medalCard" hidden>
+      <h2 id="medalText">小老鼠獲得亞馬遜勳章！</h2>
+      <p data-i18n="medalSub">四關全部過關！看，小老鼠在亞馬遜森林裡散步呢。</p>
+      <div class="btnRow">
+        <button class="go save" id="saveBtn" type="button" data-i18n="save">下載這張圖</button>
+        <button class="go" id="againBtn" type="button" data-i18n="again">再玩一次</button>
+      </div>
+      <!-- 其他章節：有沒有完成由 game.js 的 renderChapters() 填入 -->
+      <div class="moreCh">
+        <h3 data-i18n="otherChapters">去玩其他章節</h3>
+        <div class="chList" id="chList"></div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button class="tbtn" id="pauseBtn" type="button">暫停</button>
+      <button class="tbtn" id="soundBtn" type="button" aria-pressed="true">聲音：開</button>
+      <button class="tbtn" id="homeBtn" type="button" data-i18n="home">回開始畫面</button>
+      <button class="tbtn langBtn" type="button" data-i18n="langBtn">English</button>
+    </div>
+
+    <section class="rules">
+      <h2 data-i18n="rulesTitle">怎麼玩</h2>
+      <ul>
+        <li data-i18n="rule1">在圖上滑動手指，或按下面的方向鍵，帶小老鼠去吃瓜子。</li>
+        <li data-i18n="rule2">吃一顆瓜子，後面就多跟一隻小老鼠寶寶。</li>
+        <li data-i18n="rule3">從邊邊走出去，會從另一邊回來。</li>
+        <li data-i18n="rule4">碰到自己的小老鼠隊伍也沒關係，可以直接穿過去。</li>
+        <li data-i18n="rule5">吃滿這一關的瓜子就過關，後面的圖會變清楚一點。四關都過就能看到完整的圖，還有勳章！</li>
+      </ul>
+      <p class="keys" data-i18n="keys">用電腦玩：方向鍵或 WASD 控制，空白鍵暫停。</p>
+    </section>
+    <p class="credit playCredit"><a href="https://boommouse.com/" target="_blank" rel="noopener" data-i18n="credit">角色和圖都是 BooMMouse 畫的</a></p>
+  </section>
+
+</div>
+<script src="i18n.js?v=0b9c659a"></script>
+<script src="levels.js?v=4d29b1af"></script>
+<script src="assets/versions.js?v=bbfe946a"></script>
+<script src="game.js?v=e474fe50"></script>
+</body>
+</html>

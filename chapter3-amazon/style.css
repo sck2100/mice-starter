@@ -1,0 +1,212 @@
+/* 版面：開始畫面 → 遊戲區（狀態列、20×12 棋盤、方向鍵）→ 破關後勳章卡取代方向鍵 */
+:root{
+  --paper:#F4F8FC; --grid:#DCE6F2; --card:#FFFFFF;
+  --ink:#2B2233; --ink-soft:#5E586B;
+  --sheet:#beb8ae; /* 成果圖紙張的顏色，第 1 關素面底色 */
+  --red:#E2453C; --cheese:#F6C445; --seed:#F4A9BA; --leaf:#3E9A5A;
+  --f-hand:"LXGW WenKai TC","PingFang TC","Microsoft JhengHei","Noto Sans TC",system-ui,sans-serif;
+  --f-num:"Baloo 2","LXGW WenKai TC",ui-rounded,system-ui,sans-serif;
+  color-scheme:light;
+}
+/* 英文版：內文改用 Baloo 2 */
+:root:lang(en){ --f-hand:"Baloo 2","LXGW WenKai TC",system-ui,sans-serif; }
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none !important}
+html,body{margin:0;background:var(--paper)}
+body{
+  color:var(--ink); font-family:var(--f-hand); font-size:17px; line-height:1.55;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:28px 28px; min-height:100vh;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+img{max-width:100%}
+.app{
+  max-width:1000px; margin:0 auto;
+  padding-block:18px 48px;
+  padding-left:max(16px, env(safe-area-inset-left,0px));
+  padding-right:max(16px, env(safe-area-inset-right,0px));
+}
+.screen{display:flex;flex-direction:column;gap:14px}
+
+/* ---- 按鈕 ---- */
+.go{
+  margin-top:6px;font-family:var(--f-hand);font-weight:700;font-size:clamp(22px,6.6vw,28px);
+  color:var(--card);background:var(--red);border:4px solid var(--ink);border-radius:999px;
+  padding:4px 38px 6px;box-shadow:0 5px 0 var(--ink);cursor:pointer;
+}
+.go:active{transform:translateY(3px);box-shadow:0 2px 0 var(--ink)}
+.go:focus-visible{outline:4px dashed var(--ink);outline-offset:4px}
+
+/* ---- 開始畫面 ---- */
+.start{align-items:center;text-align:center;max-width:620px;margin:0 auto;gap:12px;position:relative}
+.start .langBtn{position:absolute;top:0;right:0}
+.start .homeLink{position:absolute;top:0;left:0;text-decoration:none}
+.hero{width:clamp(110px,26vw,150px);height:auto;animation:hop 1.6s ease-in-out infinite}
+@keyframes hop{50%{transform:translateY(-8px) rotate(-3deg)}}
+h1{margin:0;font-size:clamp(34px,9vw,52px);font-weight:700;line-height:1.2;text-wrap:balance}
+h1 small{display:block;font-size:.56em;margin-top:2px}
+.hl{
+  background:linear-gradient(transparent 62%, color-mix(in srgb,var(--seed) 75%,transparent) 62%, color-mix(in srgb,var(--seed) 75%,transparent) 92%, transparent 92%);
+  padding:0 4px;
+}
+.alt{margin:-6px 0 0;font-family:var(--f-num);font-weight:600;font-size:15px;color:var(--ink-soft);letter-spacing:.02em}
+.sub{margin:0;color:var(--ink-soft);max-width:30ch}
+.credit{margin:0;font-size:14px;color:var(--ink-soft)}
+.credit a{color:inherit;text-decoration:underline;text-underline-offset:3px;display:inline-block;padding:6px 4px}
+.credit a:focus-visible{outline:3px dashed var(--ink);outline-offset:2px}
+.teaser{
+  position:relative;width:min(100%,400px);aspect-ratio:5/3;overflow:hidden;
+  border:4px solid var(--ink);border-radius:22px;box-shadow:0 6px 0 var(--ink);background:var(--sheet);
+}
+.teaser img{display:block;width:100%;height:100%;max-width:none;object-fit:cover;filter:blur(14px);transform:scale(1.15);opacity:.75}
+.teaser .q{
+  position:absolute;inset:0;margin:auto;width:clamp(64px,18vw,84px);height:clamp(64px,18vw,84px);
+  display:grid;place-items:center;border-radius:50%;background:var(--cheese);border:4px solid var(--ink);box-shadow:0 4px 0 var(--ink);
+  font-family:var(--f-num);font-weight:800;font-size:clamp(40px,11vw,54px);line-height:1;padding-top:.08em;
+}
+.name{display:flex;flex-direction:column;align-items:center;gap:6px;font-weight:700;font-size:18px}
+.name input{
+  font:inherit;font-size:22px;text-align:center;width:min(100%,260px);padding:6px 14px;
+  border:3px solid var(--ink);border-radius:16px;background:var(--card);color:var(--ink);box-shadow:0 4px 0 var(--ink);
+}
+.name input::placeholder{color:#A9A3B3}
+.name input:focus-visible{outline:3px dashed var(--ink);outline-offset:3px}
+
+/* ---- 狀態列 ---- */
+.status{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.pill{
+  display:flex;align-items:center;gap:6px;background:var(--card);border:3px solid var(--ink);border-radius:999px;
+  padding:0 14px 0 8px;height:48px;box-shadow:0 4px 0 var(--ink);
+}
+#pLevel{padding-left:14px}
+.pill img,.pill canvas{width:34px;height:34px;object-fit:contain;display:block}
+.pill b{font-family:var(--f-num);font-weight:800;font-size:26px;line-height:1;font-variant-numeric:tabular-nums;min-width:1.2ch;text-align:right}
+.pill small{font-size:15px;color:var(--ink-soft)}
+.pill small:empty{display:none}
+.pill.bump b{animation:bump .3s ease}
+@keyframes bump{40%{transform:scale(1.35);color:var(--red)}}
+
+/* ---- 棋盤：背景圖用 <img>（GIF 才會動），Canvas 透明疊在上面 ---- */
+.board{
+  position:relative;aspect-ratio:5/3;margin-inline:auto;
+  width:100%;
+  width:max(min(100%,320px), min(100%, calc((100vh - 300px) * 5 / 3)));
+  width:max(min(100%,320px), min(100%, calc((100svh - 300px) * 5 / 3)));
+  border:4px solid var(--ink);border-radius:22px;box-shadow:0 6px 0 var(--ink);overflow:hidden;
+  background:var(--sheet);touch-action:none;user-select:none;-webkit-user-select:none;
+  container-type:inline-size;
+}
+#bg,#game{position:absolute;inset:0;width:100%;height:100%;display:block;max-width:none}
+#bg{object-fit:cover;opacity:0;filter:blur(20px);transform:scale(1.08);transition:filter 1s ease,opacity 1s ease,transform 1s ease}
+#game{transition:opacity .8s ease}
+.board.reveal #game{opacity:0}
+
+.overlay{
+  position:absolute;inset:0;z-index:5;display:grid;place-items:center;
+  background:color-mix(in srgb,var(--paper) 40%,transparent);
+}
+.ocard{
+  background:var(--card);border:4px solid var(--ink);border-radius:24px;box-shadow:0 6px 0 var(--ink);
+  padding:18px 24px 20px;max-width:86%;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;
+  animation:pop .35s cubic-bezier(.3,1.6,.5,1) both;
+}
+.ocard h2{margin:0;font-size:clamp(22px,6.2vw,30px);line-height:1.25;text-wrap:balance}
+.ocard p{margin:0;color:var(--ink-soft);font-size:16px;max-width:30ch}
+@keyframes pop{from{transform:scale(.7);opacity:0}}
+/* 手機直拿時棋盤很矮，卡片要縮小 */
+@container (max-width:560px){
+  .ocard{padding:10px 16px 12px;gap:4px;border-width:3px}
+  .ocard h2{font-size:20px}
+  .ocard p{font-size:14px}
+  .ocard .go{font-size:20px;padding:2px 26px 4px;margin-top:2px}
+}
+@container (max-width:400px){ .ocard p{display:none} }
+
+.medalLayer{position:absolute;inset:0;z-index:6;pointer-events:none}
+.dim{position:absolute;inset:0;background:rgba(30,20,40,.38);animation:fade .8s ease both}
+@keyframes fade{from{opacity:0}}
+/* 勳章放在圖的左上角（左邊留 2%、上面留 3%） */
+.medal{position:absolute;left:8.5%;top:3%;width:13%;translate:-50% 0;animation:drop 1.1s cubic-bezier(.3,.9,.4,1) .5s both}
+.medal svg{display:block;width:100%;height:auto;transform-origin:50% 0;animation:sway 2.6s ease-in-out 1.6s infinite;filter:drop-shadow(0 0 10px rgba(255,236,160,.9))}
+@keyframes drop{0%{translate:-50% -180%} 65%{translate:-50% 8%} 82%{translate:-50% -4%} 100%{translate:-50% 0}}
+@keyframes sway{50%{transform:rotate(5deg)}}
+/* 小老鼠站在大老鼠後面的小路上（640×384 圖上約 (290,300)），從左邊走進來 */
+.buddy{position:absolute;left:45.3%;top:78.1%;translate:-50% -50%;animation:walkIn 1.6s ease-out 1.6s both}
+.buddy img{display:block;height:9cqw;width:auto;max-width:none;animation:hop .32s ease-in-out 1.6s 5;filter:drop-shadow(0 0 1.5px #fff) drop-shadow(0 0 1.5px #fff)}
+.buddy::after{content:"";position:absolute;left:8%;right:8%;bottom:-4%;height:18%;border-radius:50%;background:rgba(255,255,255,.6);z-index:-1}
+.buddy .tag{
+  position:absolute;left:50%;bottom:100%;translate:-50% -2px;white-space:nowrap;
+  background:var(--card);border:2px solid var(--ink);border-radius:999px;padding:0 .6em;
+  font-weight:700;font-size:max(11px,2.3cqw);line-height:1.5;
+}
+@keyframes walkIn{from{left:-8%}}
+
+/* ---- 方向鍵 ---- */
+.dpad{display:grid;grid-template-columns:repeat(3,72px);grid-template-rows:repeat(3,60px);gap:6px;justify-content:center;touch-action:none}
+.dbtn{
+  appearance:none;border:3px solid var(--ink);border-radius:18px;background:var(--card);box-shadow:0 4px 0 var(--ink);
+  display:grid;place-items:center;cursor:pointer;padding:0;color:var(--ink);-webkit-tap-highlight-color:transparent;
+}
+.dbtn svg{width:30px;height:30px}
+.dbtn:active,.dbtn.on{transform:translateY(3px);box-shadow:0 1px 0 var(--ink);background:var(--cheese)}
+.dbtn:focus-visible{outline:3px dashed var(--ink);outline-offset:2px}
+.d-up{grid-area:1/2} .d-left{grid-area:2/1} .d-right{grid-area:2/3} .d-down{grid-area:3/2}
+.dmid{white-space:pre-line;grid-area:2/2;display:grid;place-items:center;font-size:13px;color:var(--ink-soft);text-align:center;line-height:1.2}
+
+/* ---- 勳章卡 ---- */
+.medalCard{
+  width:min(100%,560px);margin-inline:auto;background:var(--card);border:4px solid var(--ink);border-radius:24px;box-shadow:0 6px 0 var(--ink);
+  padding:18px 20px 22px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;
+  animation:pop .5s cubic-bezier(.3,1.6,.5,1) both;
+}
+.medalCard h2{margin:0;font-size:clamp(24px,6.4vw,34px);line-height:1.3;text-wrap:balance}
+.medalCard h2 .who{color:var(--red)}
+.medalCard p{margin:0;color:var(--ink-soft)}
+.btnRow{display:flex;flex-wrap:wrap;gap:4px 14px;justify-content:center}
+/* 勳章卡下方：其他章節，完成的是黃底打勾，還沒完成的是虛線框 */
+.moreCh{width:100%;margin-top:10px;padding-top:12px;border-top:3px dashed var(--grid);display:flex;flex-direction:column;gap:8px}
+.moreCh h3{margin:0;font-size:20px}
+.chList{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:10px}
+.chLink{
+  display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 6px 10px;
+  background:var(--card);color:var(--ink);text-decoration:none;
+  border:3px dashed var(--ink);border-radius:18px;
+}
+.chLink img{width:auto;height:56px;max-width:100%}
+.chLink b{font-size:18px;line-height:1.2}
+.chLink small{font-size:14px;color:var(--ink-soft)}
+.chLink.done{background:color-mix(in srgb,var(--cheese) 35%,var(--card));border-style:solid;box-shadow:0 4px 0 var(--ink)}
+.chLink.done small{color:var(--leaf);font-weight:700}
+.chLink:active{transform:translateY(2px)}
+.chLink:focus-visible{outline:3px dashed var(--ink);outline-offset:3px}
+.go.save{background:var(--cheese);color:var(--ink)}
+.go:disabled{opacity:.6;cursor:progress}
+
+/* ---- 其他按鈕、說明 ---- */
+.controls{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.tbtn{font:inherit;font-weight:700;font-size:16px;padding:4px 16px;border:3px solid var(--ink);border-radius:999px;background:var(--card);color:var(--ink);cursor:pointer}
+.tbtn[aria-pressed="false"]{background:var(--grid)}
+.tbtn:focus-visible{outline:3px dashed var(--ink);outline-offset:2px}
+.tbtn:disabled{opacity:.5;cursor:default}
+/* 遊戲區最上面的「← 所有章節」，跟狀態列的膠囊一樣高 */
+.status .menuLink{text-decoration:none;padding:0 16px;font-size:17px;color:var(--ink)}
+.status .menuLink:active{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
+
+.rules{
+  width:min(100%,640px);margin-inline:auto;
+  background:var(--card);border:3px solid var(--ink);border-radius:20px;padding-block:14px 16px;padding-inline:18px;
+  display:flex;flex-direction:column;gap:6px;
+}
+.rules h2{margin:0;font-size:20px}
+.rules ul{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:2px}
+.keys{margin:0;color:var(--ink-soft);font-size:14px}
+.playCredit{text-align:center}
+@media (max-width:440px){
+  .status{gap:6px}
+  .pill{height:42px;padding:0 10px 0 6px}
+  #pLevel{padding-left:10px}
+  .pill b{font-size:22px}
+  .pill img,.pill canvas{width:28px;height:28px}
+  #pParade small{display:none}
+}
+@media (max-width:380px){ .pill small{font-size:13px} .dpad{grid-template-columns:repeat(3,64px);grid-template-rows:repeat(3,54px)} }
