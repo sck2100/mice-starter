@@ -11,7 +11,8 @@ const store = {
   set(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
 };
 // ---- 語言：中文 / English，文字都在 i18n.js ----
-let lang = store.get('boommouse-lang') || 'en'; // 還沒選過語言時預設英文
+let lang = store.get('boommouse-lang') ||  // 還沒選過語言時：裝置是中文就用中文，其他用英文
+    (/^zh/i.test((navigator.languages && navigator.languages[0]) || navigator.language || '') ? 'zh' : 'en');
 const T = () => TEXT[lang];
 
 // 防快取：assets/versions.js（../tools/sync-chapters.py 產生）記著每個檔案的版本，網址後面加 ?v=版本，
